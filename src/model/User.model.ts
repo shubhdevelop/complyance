@@ -6,25 +6,25 @@ enum Role {
   MANAGER = "MANAGER",
 }
 
-export interface User extends Document {
-  username: string;
+interface User extends Document {
+  email: string;
   fullname: string;
   role: Role;
   transactions: string;
   createdAt: Date;
+  image: string;
 }
 
 // User Schema
 const UserSchema: Schema = new Schema({
-  username: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
   fullname: { type: String, required: true },
-  role: { type: String, enum: Object.values(Role), required: true },
+  role: { type: String, enum: Role, required: true },
   transactions: [{ type: Schema.Types.ObjectId, ref: "Transaction" }],
   createdAt: { type: Date, default: Date.now },
+  image: { type: String, required: false },
 });
 
-const userModel =
-  (mongoose.models.User as mongoose.Model<User>) ||
-  mongoose.model<User>("User", UserSchema);
+const User = mongoose.models.User || mongoose.model("User", UserSchema);
 
-export default userModel;
+export default User;

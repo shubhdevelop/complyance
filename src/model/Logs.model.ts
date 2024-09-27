@@ -30,8 +30,8 @@ const LogSchema: Schema = new Schema({
   type: { type: String, enum: Object.values(ActionType), required: true },
 });
 
-const LogModel =
+const Log =
   (mongoose.models.Log as mongoose.Model<Log>) ||
   mongoose.model<Log>("User", LogSchema);
 
-export default LogModel;
+export default Log;

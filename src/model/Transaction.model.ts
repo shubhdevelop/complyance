@@ -28,8 +28,8 @@ const TransactionSchema: Schema = new Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-const TransactionModel =
+const Transaction =
   (mongoose.models.Transaction as mongoose.Model<Transaction>) ||
   mongoose.model<Transaction>("Transaction", TransactionSchema);
 
-export default TransactionModel;
+export default Transaction;
