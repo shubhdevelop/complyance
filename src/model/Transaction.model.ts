@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-enum Status {
+export enum Status {
   PENDING = "PENDING",
   APPROVED = "APPROVED",
   REJECTED = "REJECTED",
@@ -11,7 +11,7 @@ export interface Transaction extends Document {
   status: Status;
   createdBy: string;
   description: string;
-  createdAt: Date;
+  createdAt: number;
 }
 
 // Transaction Schema
@@ -28,8 +28,8 @@ const TransactionSchema: Schema = new Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-const Transaction =
+const TransactionModel =
   (mongoose.models.Transaction as mongoose.Model<Transaction>) ||
   mongoose.model<Transaction>("Transaction", TransactionSchema);
 
-export default Transaction;
+export default TransactionModel;
