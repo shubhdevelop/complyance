@@ -7,10 +7,10 @@ export default function SignUp() {
 
     const { status } = useSession();
 
-    if (status === "authenticated") redirect("/dashboard")
+    if (status === "authenticated") redirect("/app")
 
     const handleSignup = async () => {
-        await signIn('github', { callbackUrl: '/dashboard' });
+        await signIn('github', { callbackUrl: '/app' });
     };
 
     return (

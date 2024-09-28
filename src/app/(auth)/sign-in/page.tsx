@@ -6,13 +6,9 @@ import { redirect } from 'next/navigation';
 export default function SignIn() {
     const { status } = useSession();
 
-    if (status === "authenticated") redirect("/dashboard")
+    if (status === "authenticated") redirect("/app")
     const handleSignup = async () => {
-        const state = encodeURIComponent(JSON.stringify({ role: "EMPLOYEE" }));
-        await signIn("github", {
-            callbackUrl: "/auth/github/callback",
-            state: state
-        });
+        await signIn('github', { callbackUrl: '/app' });
     };
 
     return (
