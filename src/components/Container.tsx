@@ -1,6 +1,6 @@
 function Container({ children }: { children: React.ReactNode }) {
     return (
-        <div className='w-screen h-screen p-5'>
+        <div className='w-full h-full p-5'>
             {children}
         </div>
     )

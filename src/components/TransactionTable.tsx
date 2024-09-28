@@ -42,7 +42,10 @@ function TransactionTable() {
     }, [setData])
 
     return (
-        <DataTable columns={columns} data={data} />
+        <>
+            <h1 className='scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-3xl'>TRANSACTIONS ({data.length})</h1>
+            <DataTable columns={columns} data={data} />
+        </>
     )
 }
 

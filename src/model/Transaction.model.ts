@@ -7,6 +7,7 @@ export enum Status {
 }
 
 export interface Transaction extends Document {
+  type: string;
   amount: number;
   status: Status;
   createdBy: string;
@@ -18,6 +19,7 @@ export interface Transaction extends Document {
 
 // Transaction Schema
 const TransactionSchema: Schema = new Schema({
+  type: { type: String, required: true },
   amount: { type: Number, required: true },
   status: {
     type: String,

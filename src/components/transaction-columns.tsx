@@ -4,11 +4,12 @@ import { ColumnDef } from "@tanstack/react-table"
 
 
 export type Transaction = {
-    id: string
+    _id: string
     amount: number
     status: "PENDING" | "APPROVED" | "REJECTED",
     createdBy: string,
 }
+
 export const columns: ColumnDef<Transaction>[] = [
     {
         id: "select",
@@ -40,6 +41,20 @@ export const columns: ColumnDef<Transaction>[] = [
         ),
     },
     {
+        accessorKey: "type",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Type
+                </Button>
+            )
+        },
+        cell: ({ row }) => <div className="lowercase">{row.getValue("type")}</div>,
+    },
+    {
         accessorKey: "name",
         header: ({ column }) => {
             return (
@@ -61,7 +76,7 @@ export const columns: ColumnDef<Transaction>[] = [
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Name
+                    Email
                 </Button>
             )
         },
@@ -119,22 +134,58 @@ export const columns: ColumnDef<Transaction>[] = [
         enableHiding: false,
         header: () => <div className="ml-5 text-left">Action</div>,
         cell: ({ row }) => {
-            const payment = row.original
+            const transaction = row.original
 
             return (
                 <div className=' ml-5 flex gap-2'>
-                    <Button className='bg-green-600'
-                        onClick={() => navigator.clipboard.writeText(payment.id)}
-                    >
-                        Approve
-                    </Button>
-                    <Button
-                        className='bg-red-600' onClick={() => navigator.clipboard.writeText(payment.id)}
-                    >
-                        Reject
-                    </Button>
+                    {row.getValue("status") === "PENDING" ?
+                        <>
+                            <Button className='bg-green-600'
+                                onClick={() => {
+                                    patchTransaction(`api/transactions/${transaction._id}/approve`)
+                                }}
+                            >
+                                Approve
+                            </Button>
+                            <Button
+                                className='bg-red-600' onClick={() => {
+                                    patchTransaction(`api/transactions/${transaction._id}/reject`)
+                                }}
+                            >
+                                Reject
+                            </Button>
+                        </> : <p className="text-gray-500">
+                            {row.getValue("status")}
+                        </p>
+
+
+                    }
                 </div>
             )
         },
     },
 ]
+
+
+async function patchTransaction(url: string) {
+    try {
+        const response = await fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include', // This is important for including cookies (session)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to update transaction');
+        }
+
+        const result = await response.json();
+        alert(result.message)
+    } catch (error) {
+        console.error('Error Fetching transaction:', error);
+        throw error;
+    }
+}

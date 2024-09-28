@@ -18,47 +18,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-export type Payment = {
-    id: string
-    amount: number
-    status: "pending" | "processing" | "success" | "failed"
-    email: string
-}
-
-const data: Payment[] = [
-    {
-        id: "m5gr84i9",
-        amount: 316,
-        status: "success",
-        email: "ken99@yahoo.com",
-    },
-    {
-        id: "3u1reuv4",
-        amount: 242,
-        status: "success",
-        email: "Abe45@gmail.com",
-    },
-    {
-        id: "derv1ws0",
-        amount: 837,
-        status: "processing",
-        email: "Monserrat44@gmail.com",
-    },
-    {
-        id: "5kma53ae",
-        amount: 874,
-        status: "success",
-        email: "Silas22@gmail.com",
-    },
-    {
-        id: "bhqecj4p",
-        amount: 721,
-        status: "failed",
-        email: "carmella@hotmail.com",
-    },
-]
-
-
 
 export function TransactionFrom() {
 
@@ -93,7 +52,8 @@ export function TransactionFrom() {
         resolver: zodResolver(createTransactionSchema),
         defaultValues: {
             amount: 0,
-            description: ""
+            description: "",
+            type: "",
         },
     })
 
@@ -130,12 +90,29 @@ export function TransactionFrom() {
                                 <Input placeholder="Description" {...field} />
                             </FormControl>
                             <FormDescription>
-                                This is your public display name.
+                                Provide Some description
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+                <FormField
+                    control={form.control}
+                    name="type"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Type</FormLabel>
+                            <FormControl>
+                                <Input placeholder="type" {...field} />
+                            </FormControl>
+                            <FormDescription>
+                                Give your Transaction type
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
 
                 <Button type="submit">Submit</Button>
             </form>

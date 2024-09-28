@@ -13,6 +13,7 @@ interface User extends Document {
   transactions: string;
   createdAt: Date;
   image: string;
+  incompleteUserDetails: boolean;
 }
 
 // User Schema
@@ -23,6 +24,7 @@ const UserSchema: Schema = new Schema({
   transactions: [{ type: Schema.Types.ObjectId, ref: "Transaction" }],
   createdAt: { type: Date, default: Date.now },
   image: { type: String, required: false },
+  incompleteUserDetails: { type: Boolean, required: true, default: true },
 });
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema);
