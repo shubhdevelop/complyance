@@ -12,6 +12,8 @@ export interface Transaction extends Document {
   createdBy: string;
   description: string;
   createdAt: number;
+  email: string;
+  name: string;
 }
 
 // Transaction Schema
@@ -25,6 +27,8 @@ const TransactionSchema: Schema = new Schema({
   },
   createdBy: { type: Schema.Types.ObjectId, ref: "User" },
   description: { type: String, required: true },
+  email: { type: String, required: true },
+  name: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 });
 

@@ -40,6 +40,20 @@ export const columns: ColumnDef<Transaction>[] = [
         ),
     },
     {
+        accessorKey: "name",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Name
+                </Button>
+            )
+        },
+        cell: ({ row }) => <div className="lowercase">{row.getValue("name")}</div>,
+    },
+    {
         accessorKey: "email",
         header: ({ column }) => {
             return (
@@ -47,7 +61,7 @@ export const columns: ColumnDef<Transaction>[] = [
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Email
+                    Name
                 </Button>
             )
         },
@@ -82,6 +96,22 @@ export const columns: ColumnDef<Transaction>[] = [
         },
         cell: ({ row }) => {
             return <div className="text-left ml-3font-medium">{row.getValue("createdBy")}</div>
+        },
+    },
+    {
+        accessorKey: "createdAt",
+        header: ({ column }) => {
+            return (
+                <Button className="text-left"
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Created At
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            return <div className="text-left ml-3font-medium">{row.getValue("createdAt")}</div>
         },
     },
     {

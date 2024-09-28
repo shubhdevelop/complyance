@@ -24,6 +24,7 @@ export async function GET() {
     }).populate("transactions");
 
     if (userData) {
+      console.log(userData.transactions);
       return NextResponse.json(
         { transaction: userData.transactions },
         { status: 200 }
@@ -58,6 +59,8 @@ export async function POST(req: NextRequest) {
         status: "PENDING",
         createdAt: Date.now(),
         createdBy: userData._id,
+        name: userData.fullname,
+        email: session.user?.email,
       });
       const createdTransaction = await transaction.save();
 

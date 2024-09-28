@@ -28,6 +28,8 @@ function TransactionTable() {
             }
 
             const result = await response.json();
+            console.log(result);
+
             setData(result.transaction)
         } catch (error) {
             console.error('Error Fetching transaction:', error);
