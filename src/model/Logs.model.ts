@@ -32,6 +32,6 @@ const LogSchema: Schema = new Schema({
 
 const Log =
   (mongoose.models.Log as mongoose.Model<Log>) ||
-  mongoose.model<Log>("User", LogSchema);
+  mongoose.model<Log>("Log", LogSchema);
 
 export default Log;
