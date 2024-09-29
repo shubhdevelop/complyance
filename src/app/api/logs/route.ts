@@ -24,11 +24,7 @@ export async function GET() {
     console.log(userData);
 
     if (userData) {
-      if (
-        userData.role === "EMPLOYEE" ||
-        userData.role === "MANAGER" ||
-        userData.role === "ADMIN"
-      ) {
+      if (userData.role === "ADMIN") {
         const logs = await Log.find({});
         console.log(logs);
         if (logs) {
