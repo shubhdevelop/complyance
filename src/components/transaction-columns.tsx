@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@radix-ui/react-checkbox"
 import { ColumnDef } from "@tanstack/react-table"
+import toast from "react-hot-toast"
 
 
 export type Transaction = {
@@ -10,7 +11,7 @@ export type Transaction = {
     createdBy: string,
 }
 
-export const columns: ColumnDef<Transaction>[] = [
+export const normalColumns: ColumnDef<Transaction>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -166,6 +167,127 @@ export const columns: ColumnDef<Transaction>[] = [
     },
 ]
 
+export const empColumns: ColumnDef<Transaction>[] = [
+    {
+        id: "select",
+        header: ({ table }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected() ||
+                    (table.getIsSomePageRowsSelected() && "indeterminate")
+                }
+                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
+    {
+        accessorKey: "status",
+        header: "Status",
+        cell: ({ row }) => (
+            <div className="capitalize">{row.getValue("status")}</div>
+        ),
+    },
+    {
+        accessorKey: "type",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Type
+                </Button>
+            )
+        },
+        cell: ({ row }) => <div className="lowercase">{row.getValue("type")}</div>,
+    },
+    {
+        accessorKey: "name",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Name
+                </Button>
+            )
+        },
+        cell: ({ row }) => <div className="lowercase">{row.getValue("name")}</div>,
+    },
+    {
+        accessorKey: "email",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Email
+                </Button>
+            )
+        },
+        cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    },
+    {
+        accessorKey: "amount",
+        header: () => <div className="text-right">Amount</div>,
+        cell: ({ row }) => {
+            const amount = parseFloat(row.getValue("amount"))
+
+            // Format the amount as a dollar amount
+            const formatted = new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+            }).format(amount)
+
+            return <div className="text-right font-medium">{formatted}</div>
+        },
+    },
+    {
+        accessorKey: "createdBy",
+        header: ({ column }) => {
+            return (
+                <Button className="text-left"
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Created By
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            return <div className="text-left ml-3font-medium">{row.getValue("createdBy")}</div>
+        },
+    },
+    {
+        accessorKey: "createdAt",
+        header: ({ column }) => {
+            return (
+                <Button className="text-left"
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Created At
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            return <div className="text-left ml-3font-medium">{row.getValue("createdAt")}</div>
+        },
+    },
+]
+
 
 async function patchTransaction(url: string) {
     try {
@@ -183,9 +305,12 @@ async function patchTransaction(url: string) {
         }
 
         const result = await response.json();
-        alert(result.message)
+        if (result) {
+            toast.success("Transaction submitted succesfully!")
+        }
     } catch (error) {
-        console.error('Error Fetching transaction:', error);
+        toast.error("Error updating transaction!")
+        console.error('Error updating transaction:', error);
         throw error;
     }
 }

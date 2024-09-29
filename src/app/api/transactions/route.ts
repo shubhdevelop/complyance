@@ -21,14 +21,20 @@ export async function GET() {
 
     const userData = await User.findOne({
       email: session.user?.email,
-    }).populate("transactions");
+    });
 
-    if (userData) {
-      console.log(userData.transactions);
-      return NextResponse.json(
-        { transaction: userData.transactions },
-        { status: 200 }
-      );
+    let transaction;
+
+    if (userData && userData.role === "EMPLOYEE") {
+      const userDataWithTransaction = await userData.populate("transactions");
+      transaction = userDataWithTransaction.transactions;
+    } else {
+      transaction = await TransactionModel.find();
+      console.log(transaction);
+    }
+
+    if (transaction) {
+      return NextResponse.json({ transaction: transaction }, { status: 200 });
     }
 
     return NextResponse.json({ message: "User Not Found!!" }, { status: 404 });

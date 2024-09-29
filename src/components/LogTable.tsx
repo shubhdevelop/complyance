@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { DataTable } from './DataTable'
 import { columns } from './log-columns'
+import CsvDownloader from './CsvDownload';
 
 function LogTable() {
     const [data, setData] = useState([]);
@@ -35,7 +36,7 @@ function LogTable() {
 
     return (
         <>
-            <h1 className='scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-3xl'>AUDIT LOGS ({data.length})</h1>
+            <h1 className='scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-3xl'>AUDIT LOGS ({data.length})</h1> <CsvDownloader transactions={data} />
             <DataTable columns={columns} data={data} />
         </>
     )

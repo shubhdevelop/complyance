@@ -20,6 +20,7 @@
     "@tanstack/react-table": "^8.20.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "csv-stringify": "^6.5.1",
     "framer-motion": "^11.9.0",
     "lucide-react": "^0.446.0",
     "mongoose": "^8.6.4",
