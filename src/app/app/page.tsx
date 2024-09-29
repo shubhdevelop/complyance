@@ -18,7 +18,7 @@ function App() {
     const [active, setActive] = useState('transaction')
     const [self, setSelf] = useState<User>();
     const role = self?.role;
-    const isManagerOrAdmin = "ADMIN" === role;
+    const isManagerOrAdmin = "ADMIN" === role || role === "MANAGER";
     const [logData, setLogData] = useState([]);
     const [transactionData, seTtransactionData] = useState([]);
 
