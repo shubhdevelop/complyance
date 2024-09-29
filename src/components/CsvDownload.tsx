@@ -26,7 +26,7 @@ const CsvDownloader = ({ transactions, text }: { transactions: Transaction[] | L
     };
 
     return (
-        <div>
+        <div className='mt-2'>
             <Button onClick={downloadTransactionsCSV}>
                 {text}
             </Button>

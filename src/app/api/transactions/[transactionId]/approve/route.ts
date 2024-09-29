@@ -29,6 +29,19 @@ export async function PATCH(
           { status: 401 }
         );
       }
+
+      const transaction = await TransactionModel.findById(transactionId);
+
+      if (transaction?.status !== "PENDING") {
+        console.log(transaction);
+
+        return NextResponse.json(
+          {
+            message: "You can only Approve Once!!",
+          },
+          { status: 409 }
+        );
+      }
       const updatedTransaction = await TransactionModel.findByIdAndUpdate(
         transactionId,
         { status: "APPROVED" }

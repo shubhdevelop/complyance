@@ -30,6 +30,17 @@ export async function PATCH(
         );
       }
 
+      const transaction = await TransactionModel.findById(transactionId);
+
+      if (transaction?.status !== "PENDING") {
+        return NextResponse.json(
+          {
+            message: "You can only Reject Once!!",
+          },
+          { status: 409 }
+        );
+      }
+
       const updatedTransaction = await TransactionModel.findByIdAndUpdate(
         transactionId,
         { status: "REJECTED" }

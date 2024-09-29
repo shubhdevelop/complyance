@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@radix-ui/react-checkbox"
 import { ColumnDef } from "@tanstack/react-table"
+import React from "react"
 import toast from "react-hot-toast"
 
 
@@ -301,7 +302,7 @@ async function patchTransaction(url: string) {
 
         if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(errorData.message || 'Failed to update transaction');
+            toast.error(`Error updating transaction! ${errorData.message}`)
         }
 
         const result = await response.json();
@@ -311,6 +312,5 @@ async function patchTransaction(url: string) {
     } catch (error) {
         toast.error("Error updating transaction!")
         console.error('Error updating transaction:', error);
-        throw error;
     }
 }

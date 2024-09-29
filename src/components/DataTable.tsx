@@ -34,6 +34,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@radix-ui/react-select"
 
 // const data: Payment[] = [
 //     {
@@ -212,8 +213,24 @@ export function DataTable<TData, TValue>({
                     onChange={(event) =>
                         table.getColumn("email")?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm"
+                    className="max-w-sm py-2 px-3"
                 />
+                <select
+                    value={(table.getColumn("status")?.getFilterValue() as string) ?? ""}
+                    onChange={(event) =>
+                        table.getColumn("status")?.setFilterValue(event.target.value === "ALL" ? "" : event.target.value)
+                    }
+                    className="max-w-sm py-2 px-3 ml-2 rounded-md border-[1px] cursor-pointer bg-white  "
+
+                >
+                    <option value="ALL" className="max-w-sm py-2 px-3 cursor-pointer bg-white  ">ALL</option>
+                    <option value="PENDING" className="max-w-sm py-2 px-3 cursor-pointer bg-white  "> PENDING</option>
+                    <option value="APPROVED" className="max-w-sm py-2 px-3 cursor-pointer bg-white  "> APPROVED</option>
+                    <option value="REJECTED" className="max-w-sm py-2 px-3 cursor-pointer bg-white  "> REJECTED</option>
+
+
+                </select>
+
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">

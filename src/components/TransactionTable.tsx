@@ -3,6 +3,7 @@ import { DataTable } from './DataTable'
 import { normalColumns, empColumns } from './transaction-columns'
 import User from '@/model/User.model'
 import CsvDownloader from './CsvDownload'
+import toast from 'react-hot-toast'
 
 export type Transaction = {
     id: string
@@ -59,8 +60,7 @@ function TransactionTable() {
 
             setData(result.transaction)
         } catch (error) {
-            console.error('Error Fetching transaction:', error);
-            throw error;
+            toast.error(`Error ${error}`)
         }
     }
 

@@ -30,7 +30,6 @@ export async function GET() {
       transaction = userDataWithTransaction.transactions;
     } else {
       transaction = await TransactionModel.find();
-      console.log(transaction);
     }
 
     if (transaction) {
