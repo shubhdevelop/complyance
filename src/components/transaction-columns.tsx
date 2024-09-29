@@ -135,8 +135,9 @@ export const normalColumns: ColumnDef<Transaction>[] = [
         id: "actions",
         enableHiding: false,
         header: () => <div className="ml-5 text-left">Action</div>,
-        cell: ({ row }) => {
+        cell: ({ row, table }) => {
             const transaction = row.original
+            const meta = table.options.meta as { updateData: (rowIndex: number, columnId: string, value: unknown) => void }
 
             return (
                 <div className=' ml-5 flex gap-2'>
@@ -145,6 +146,7 @@ export const normalColumns: ColumnDef<Transaction>[] = [
                             <Button className='bg-green-600'
                                 onClick={() => {
                                     patchTransaction(`api/transactions/${transaction._id}/approve`, "approved")
+                                    meta.updateData(row.index, "status", "APPROVED")
                                 }}
                             >
                                 Approve
@@ -152,6 +154,7 @@ export const normalColumns: ColumnDef<Transaction>[] = [
                             <Button
                                 className='bg-red-600' onClick={() => {
                                     patchTransaction(`api/transactions/${transaction._id}/reject`, "rejected")
+                                    meta.updateData(row.index, "status", "REJECTED")
                                 }}
                             >
                                 Reject
@@ -159,7 +162,6 @@ export const normalColumns: ColumnDef<Transaction>[] = [
                         </> : <p className="text-gray-500">
                             {row.getValue("status")}
                         </p>
-
 
                     }
                 </div>

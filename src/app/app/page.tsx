@@ -134,7 +134,7 @@ function App() {
 
             </div>
             {
-                active === "logs" ? <LogTable data={logData} /> : <TransactionTable data={transactionData} />
+                active === "logs" ? <LogTable data={logData} /> : <TransactionTable data={transactionData} setData={seTtransactionData} />
             }
         </>
 

@@ -39,13 +39,15 @@ interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[],
     type: "log" | "transaction"
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setData: (data: any) => void,
 }
 
 
 export function DataTable<TData, TValue>({
     columns,
     data,
-    type
+    type, setData
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -71,6 +73,21 @@ export function DataTable<TData, TValue>({
             columnFilters,
             columnVisibility,
             rowSelection,
+        }, meta: {
+            updateData: (rowIndex: number, columnId: string, value: unknown) => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                setData((old: any[]) =>
+                    old?.map((row: unknown[], index: number) => {
+                        if (index === rowIndex) {
+                            return {
+                                ...old[rowIndex]!,
+                                [columnId]: value,
+                            }
+                        }
+                        return row
+                    })
+                )
+            },
         },
     })
 
@@ -183,26 +200,6 @@ export function DataTable<TData, TValue>({
                         )}
                     </TableBody>
                 </Table>
-            </div>
-            <div className="flex items-center justify-end space-x-2 py-4">
-                <div className="space-x-2">
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => table.previousPage()}
-                        disabled={!table.getCanPreviousPage()}
-                    >
-                        Previous
-                    </Button>
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => table.nextPage()}
-                        disabled={!table.getCanNextPage()}
-                    >
-                        Next
-                    </Button>
-                </div>
             </div>
         </div>
     )

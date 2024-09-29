@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { DataTable } from './DataTable'
 import { normalColumns, empColumns } from './transaction-columns'
 import User from '@/model/User.model'
@@ -14,9 +14,10 @@ export type Transaction = {
 
 interface DataTableProps<TData> {
     data: TData[]
+    setData: Dispatch<SetStateAction<never[]>>
 }
 
-function TransactionTable({ data }: DataTableProps<Transaction>) {
+function TransactionTable({ data, setData }: DataTableProps<Transaction>) {
     const [self, setSelf] = useState<User>();
 
     async function getSelf() {
@@ -51,7 +52,7 @@ function TransactionTable({ data }: DataTableProps<Transaction>) {
     return (
         <>
             <h1 className='scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-3xl'>TRANSACTIONS ({data.length})</h1> <CsvDownloader transactions={data} text={"Download All Transaction"} />
-            <DataTable type='transaction' columns={self?.role === "EMPLOYEE" ? empColumns : normalColumns} data={data} />
+            <DataTable type='transaction' columns={self?.role === "EMPLOYEE" ? empColumns : normalColumns} data={data} setData={setData} />
         </>
     )
 }
