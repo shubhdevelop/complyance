@@ -290,7 +290,7 @@ export const empColumns: ColumnDef<Transaction>[] = [
 ]
 
 
-async function patchTransaction(url: string) {
+async function patchTransaction(url: string, type: "approved" | "rejected") {
     try {
         const response = await fetch(url, {
             method: 'PATCH',
@@ -302,12 +302,12 @@ async function patchTransaction(url: string) {
 
         if (!response.ok) {
             const errorData = await response.json();
-            toast.error(`Error updating transaction! ${errorData.message}`)
+            toast.error(`Error ${type} transaction! ${errorData.message}`)
         }
 
         const result = await response.json();
         if (result) {
-            toast.success("Transaction submitted succesfully!")
+            toast.success(`Transaction ${type} succesfully!`)
         }
     } catch (error) {
         toast.error("Error updating transaction!")

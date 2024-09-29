@@ -45,6 +45,7 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
     columns,
     data,
+    type
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -76,26 +77,34 @@ export function DataTable<TData, TValue>({
     return (
         <div className="w-full">
             <div className="flex items-center py-4">
-                <Input
-                    placeholder="Filter emails..."
+                {type === "transaction" ? <Input
+                    placeholder="Filter by emails..."
                     value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
                         table.getColumn("email")?.setFilterValue(event.target.value)
                     }
                     className="max-w-sm py-2 px-3"
-                />
-                <select
-                    value={(table.getColumn("status")?.getFilterValue() as string) ?? ""}
+                /> : <Input
+                    placeholder="Filter by content..."
+                    value={(table.getColumn("content")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
-                        table.getColumn("status")?.setFilterValue(event.target.value === "ALL" ? "" : event.target.value)
+                        table.getColumn("content")?.setFilterValue(event.target.value)
+                    }
+                    className="max-w-sm py-2 px-3"
+                />}
+                <select
+                    value={(table.getColumn(type !== 'log' ? "status" : "type")?.getFilterValue() as string) ?? ""}
+                    onChange={(event) =>
+                        table.getColumn(type !== 'log' ? "status" : "type")?.setFilterValue(event.target.value === "ALL" ? "" : event.target.value)
                     }
                     className="max-w-sm py-2 px-3 ml-2 rounded-md border-[1px] cursor-pointer bg-white  "
 
                 >
                     <option value="ALL" className="max-w-sm py-2 px-3 cursor-pointer bg-white">ALL</option>
-                    <option value={"PENDING"} className="max-w-sm py-2 px-3 cursor-pointer bg-white  "> PENDING</option>
-                    <option value={"APPROVED"} className="max-w-sm py-2 px-3 cursor-pointer bg-white  "> APPROVED</option>
-                    <option value={"REJECTED"} className="max-w-sm py-2 px-3 cursor-pointer bg-white  "> REJECTED</option>
+                    <option value={type === "log" ? "SUBMIT" : "PENDING"} className="max-w-sm py-2 px-3 cursor-pointer bg-white  "> {type === "log" ? "SUBMIT" : "PENDING"}</option>
+                    <option value={type === "log" ? "APPROVE" : "APPROVED"} className="max-w-sm py-2 px-3 cursor-pointer bg-white  "> {type === "log" ? "APPROVE" : "APPROVED"}</option>
+                    <option value={type === "log" ? "REJECT" : "REJECTED"} className="max-w-sm py-2 px-3 cursor-pointer bg-white  "> {type === "log" ? "REJECT" : "REJECTED"}</option>
+                    {type === "log" ? <option value={"DELETE"} className="max-w-sm py-2 px-3 cursor-pointer bg-white  "> DELETE </option> : null}
                 </select>
 
                 <DropdownMenu>

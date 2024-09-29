@@ -10,6 +10,7 @@ export type Log = {
     content: string;
     withRole: string;
     type: string;
+    email: string,
 }
 
 

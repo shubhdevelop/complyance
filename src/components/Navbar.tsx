@@ -23,7 +23,7 @@ const Navbar = () => {
                     </>)
                 }
                 <Link href={'/profile'} className="rounded-full w-10 h-10 overflow-hidden bg-white">
-                    <Image width={50} height={50} alt="profile pic" src={session?.user?.image || ""} />
+                    <img width={50} height={50} alt="profile pic" src={session?.user?.image || ""} />
                 </Link>
             </div >
 
