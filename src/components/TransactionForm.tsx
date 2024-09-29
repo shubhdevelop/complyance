@@ -4,7 +4,7 @@ import { createTransactionSchema } from "@/schemas/createTransactionSchema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-
+import { toast } from "react-hot-toast";
 
 import { Button } from "@/components/ui/button"
 import {
@@ -46,7 +46,7 @@ export function TransactionFrom() {
         }
     }
 
-    // const { reset } = useForm();
+    // const { reset } = useForm()
 
 
     const form = useForm<z.infer<typeof createTransactionSchema>>({
@@ -61,13 +61,15 @@ export function TransactionFrom() {
     async function onSubmit(values: z.infer<typeof createTransactionSchema>) {
         try {
             await createTransaction(values);
+            toast.success("Transaction submitted succesfully!")
             form.reset({
                 amount: 0,
                 description: "",
                 type: "",
             });
-        } catch (error) {
-            console.error('Error submitting form:', error);
+        } catch (err) {
+            toast.error("Error submitting form");
+            console.log(err);
         }
     }
 
