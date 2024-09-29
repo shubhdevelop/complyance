@@ -23,6 +23,13 @@ export async function PATCH(
     await mongoose.connect(process.env.MONGODB_URI!);
     const userData = await User.findOne({ email: email });
     if (userData) {
+      if (userData.role === "EMPLOYEE") {
+        return NextResponse.json(
+          { message: "you're not authrozied for this action" },
+          { status: 401 }
+        );
+      }
+
       const updatedTransaction = await TransactionModel.findByIdAndUpdate(
         transactionId,
         { status: "REJECTED" }
