@@ -10,7 +10,7 @@ const Navbar = () => {
     const isLoggedIn = status === "authenticated";
     return (
         <nav className='p-3 border-[.3px] flex flex-row justify-between items-center'>
-            <Link href={"/app"}>
+            <Link href={"/"}>
                 <h1 className="scroll-m-20 text-lg font-extrabold tracking-tight lg:text-xl">
                     Complyance
                 </h1>
