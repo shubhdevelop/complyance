@@ -144,14 +144,14 @@ export const normalColumns: ColumnDef<Transaction>[] = [
                         <>
                             <Button className='bg-green-600'
                                 onClick={() => {
-                                    patchTransaction(`api/transactions/${transaction._id}/approve`)
+                                    patchTransaction(`api/transactions/${transaction._id}/approve`, "approved")
                                 }}
                             >
                                 Approve
                             </Button>
                             <Button
                                 className='bg-red-600' onClick={() => {
-                                    patchTransaction(`api/transactions/${transaction._id}/reject`)
+                                    patchTransaction(`api/transactions/${transaction._id}/reject`, "rejected")
                                 }}
                             >
                                 Reject
