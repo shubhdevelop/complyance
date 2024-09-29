@@ -42,22 +42,15 @@ export async function PATCH(req: NextRequest) {
     await mongoose.connect(process.env.MONGODB_URI!);
     const userData = await User.findOne({ email: email });
     if (userData) {
-      if (userData.incompleteUserDetails) {
-        const updatedUser = await User.findByIdAndUpdate(userData._id, {
-          role: role,
-          incompleteUserDetails: false,
-        });
+      const updatedUser = await User.findByIdAndUpdate(userData._id, {
+        role: role,
+        incompleteUserDetails: false,
+      });
 
-        if (updatedUser) {
-          return NextResponse.json(
-            { message: "Role Updated Successfully" },
-            { status: 200 }
-          );
-        }
-      } else {
+      if (updatedUser) {
         return NextResponse.json(
-          { message: "you can only update role once" },
-          { status: 404 }
+          { message: "Role Updated Successfully" },
+          { status: 200 }
         );
       }
     }

@@ -1,10 +1,10 @@
 import React from 'react';
 import { stringify } from 'csv-stringify/sync';
 import { Button } from '@/components/ui/button';
-import { Transaction } from './transaction-columns';
-import { Log } from './log-columns';
 
-const CsvDownloader = ({ transactions, text }: { transactions: Transaction[] | Log[], text: string }) => {
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const CsvDownloader = ({ transactions, text }: { transactions: any[], text: string }) => {
     const downloadTransactionsCSV = () => {
         // Convert transactions to CSV string
         const csvString = stringify(transactions, {

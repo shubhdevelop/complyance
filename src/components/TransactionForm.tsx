@@ -19,7 +19,7 @@ import {
 import { Input } from "@/components/ui/input"
 
 
-export function TransactionFrom() {
+export function TransactionFrom({ update }: { update: () => void }) {
 
 
     async function createTransaction(transactionData: { amount: number, description: string }) {
@@ -67,6 +67,7 @@ export function TransactionFrom() {
                 description: "",
                 type: "",
             });
+            update();
         } catch (err) {
             toast.error("Error submitting form");
             console.log(err);

@@ -4,6 +4,7 @@ import React from 'react'
 import AuthButton from './AuthButton'
 import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const Navbar = () => {
     const { data: session, status } = useSession();
@@ -17,16 +18,16 @@ const Navbar = () => {
             </Link>
             <div className='flex flex-row justify-between gap-5'>
                 {
-                    isLoggedIn ? (<AuthButton variant="Log Out" to={"/sign-in"} onClick={() => signOut()} />) : (<>
+                    isLoggedIn ? (<div className='flex items-center gap-3'>  <Link href={"/select-role"} className="border-[1px] py-1 px-2 rounded-md"  > Select Role </Link> <AuthButton variant="Log Out" to={"/sign-in"} onClick={() => signOut()} /> </div>) : (<>
                         <AuthButton variant='Sign Up' to={"/sign-up"} />
                     </>)
                 }
                 <Link href={'/profile'} className="rounded-full w-10 h-10 overflow-hidden bg-white">
-                    <img alt="profile pic" src={session?.user?.image || ""} />
+                    <Image width={50} height={50} alt="profile pic" src={session?.user?.image || ""} />
                 </Link>
-            </div>
+            </div >
 
-        </nav>
+        </nav >
     )
 }
 

@@ -1,13 +1,14 @@
 "use client"
 
 
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-// import { redirect } from 'next/navigation';
-// import { useRouter } from 'next/router';
+import { redirect } from 'next/navigation';
 import { useState } from 'react';
 
 export default function SelectRole() {
-
+    const { status } = useSession();
+    if (status !== "authenticated") redirect("/sign-up")
     const [role, setRole] = useState("EMPLOYEE");
     const router = useRouter()
     async function updateRole(role: string) {
@@ -44,12 +45,14 @@ export default function SelectRole() {
             <div className='flex flex-col items-center gap-3'>
                 <h1 className='font-extrabold underline underline-offset-2 text-xl'>Select Role</h1>
                 <div className='flex flex-row gap-3 text-lg '>
-                    <div className={`${role === "EMPLOYEE" ? "bg-gray-600 text-white" : ""} border-[.7px] px-4 py-2 cursor-pointer rounded-md`} onClick={() => setRole("EMPLOYEE")}>Employee</div>
-                    <div className={`${role === "MANAGER" ? "bg-gray-600 text-white" : ""} border-[.7px] px-4 py-2 cursor-pointer rounded-md`} onClick={() => setRole("MANAGER")}>Manager</div>
-                    <div className={`${role === "ADMIN" ? "bg-gray-600 text-white" : ""} border-[.7px] px-4 py-2 cursor-pointer rounded-md`} onClick={() => setRole("ADMIN")} >Admin</div>
+                    <div className={`${role === "EMPLOYEE" ? "bg-gray-400 text-white" : ""} border-[.7px] px-4 py-2 cursor-pointer rounded-md`} onClick={() => setRole("EMPLOYEE")}>Employee</div>
+                    <div className={`${role === "MANAGER" ? "bg-gray-400 text-white" : ""} border-[.7px] px-4 py-2 cursor-pointer rounded-md`} onClick={() => setRole("MANAGER")}>Manager</div>
+                    <div className={`${role === "ADMIN" ? "bg-gray-400 text-white" : ""} border-[.7px] px-4 py-2 cursor-pointer rounded-md`} onClick={() => setRole("ADMIN")} >Admin</div>
                 </div>
             </div>
-            <div className='border-[.7px] px-3 py-2 rounded-md flex flex-row items-center gap-2 cursor-pointer' onClick={() => handleSignup()}> Complete Signup </div>
+            <div className='border-[.7px] px-3 py-2 rounded-md flex flex-row items-center gap-2 cursor-pointer bg-gray-900 text-white' onClick={() => handleSignup()}> Select Role </div>
+
+            <p className="text-sm text-muted-foreground text-center mt-6">Just for sake of demonstration, we allowing users to change role <br /> Ideally flow is we only let user to select role once, <br /> after that on some approval</p>
         </div >
     );
 }
