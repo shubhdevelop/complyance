@@ -20,10 +20,11 @@ const Navbar = () => {
                     isLoggedIn ? (<div className='flex items-center gap-3'>  <Link href={"/select-role"} className="border-[1px] py-1 px-2 rounded-md"  > Select Role </Link> <AuthButton variant="Log Out" to={"/sign-in"} onClick={() => signOut()} /> </div>) : (<>
                         <AuthButton variant='Sign Up' to={"/sign-up"} />
                     </>)
+                }{isLoggedIn ?
+                    <Link href={'/profile'} className="rounded-full w-10 h-10 overflow-hidden bg-white">
+                        <img width={50} height={50} alt="profile pic" src={session?.user?.image || ""} />
+                    </Link> : null
                 }
-                <Link href={'/profile'} className="rounded-full w-10 h-10 overflow-hidden bg-white">
-                    <img width={50} height={50} alt="profile pic" src={session?.user?.image || ""} />
-                </Link>
             </div >
 
         </nav >
