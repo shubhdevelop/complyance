@@ -1,9 +1,13 @@
 "use client"
 
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 
 export default function SignUp() {
+    const { status } = useSession();
+
+    if (status === "authenticated") redirect("/app")
     const handleSignup = async () => {
         await signIn('github', { callbackUrl: '/select-role' });
     };

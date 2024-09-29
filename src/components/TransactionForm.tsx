@@ -46,6 +46,7 @@ export function TransactionFrom() {
         }
     }
 
+    // const { reset } = useForm();
 
 
     const form = useForm<z.infer<typeof createTransactionSchema>>({
@@ -57,9 +58,19 @@ export function TransactionFrom() {
         },
     })
 
-    function onSubmit(values: z.infer<typeof createTransactionSchema>) {
-        createTransaction(values);
+    async function onSubmit(values: z.infer<typeof createTransactionSchema>) {
+        try {
+            await createTransaction(values);
+            form.reset({
+                amount: 0,
+                description: "",
+                type: "",
+            });
+        } catch (error) {
+            console.error('Error submitting form:', error);
+        }
     }
+
 
     return (
         <Form {...form}>
@@ -119,3 +130,5 @@ export function TransactionFrom() {
         </Form>
     )
 }
+
+
