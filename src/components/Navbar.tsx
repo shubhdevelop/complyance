@@ -17,13 +17,13 @@ const Navbar = () => {
             </Link>
             <div className='flex flex-row justify-between gap-5'>
                 {
-                    isLoggedIn ? (<><AuthButton variant="Log Out" to={"/sign-in"} onClick={() => signOut()} /> <img alt="profile pic" src={session?.user?.image || ""} /></>) : (<>
-                        <AuthButton variant='Sign Up' to={"/sign-up"} />    <Link href={'/profile'} className="rounded-full w-10 h-10 overflow-hidden bg-white">
-
-                        </Link>
+                    isLoggedIn ? (<AuthButton variant="Log Out" to={"/sign-in"} onClick={() => signOut()} />) : (<>
+                        <AuthButton variant='Sign Up' to={"/sign-up"} />
                     </>)
                 }
-
+                <Link href={'/profile'} className="rounded-full w-10 h-10 overflow-hidden bg-white">
+                    <img alt="profile pic" src={session?.user?.image || ""} />
+                </Link>
             </div>
 
         </nav>
