@@ -13,7 +13,7 @@ export default function SignUp() {
     };
 
     return (
-        <div className='border-[.7px] shadow-xl gap-3 mt-24 h-[500px] w-[700px] ml-auto mr-auto rounded-xl flex flex-col justify-center items-center'>
+        <div className='border-[.7px] shadow-xl gap-3 mt-24 h-[300px] w-[300px] md:h-[500px] md:w-[700px] ml-auto mr-auto rounded-xl flex flex-col justify-center items-center'>
             <div className='flex flex-col items-center gap-3'>
                 <h1 className='font-extrabold underline underline-offset-2 text-xl'>Sign Up </h1>
             </div>

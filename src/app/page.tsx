@@ -8,7 +8,7 @@ export default function Home() {
   const { status } = useSession()
   if (status == "authenticated") redirect("/app")
   return (
-    <div className='w-full h-full p-10 flex flex-row justify-center items-center'>
+    <div className='w-full h-full p-10 flex flex-col-reverse md:flex-row justify-center items-center'>
       <div className="">
         <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight text-blue-400">Welcome to Complayance</h3>
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">E-Invoicing Simplified for businesses</h1>
