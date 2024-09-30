@@ -133,6 +133,7 @@ function App() {
                 </AnimatedModal>
 
             </div>
+            <p className='text-lg'><b>Current Role</b> : <span className='text-blue-600'>{self?.role}</span></p>
             {
                 active === "logs" ? <LogTable data={logData} setData={setLogData} /> : <TransactionTable data={transactionData} setData={seTtransactionData} />
             }
