@@ -18,7 +18,7 @@ function App() {
     const [active, setActive] = useState('transaction')
     const [self, setSelf] = useState<User>();
     const role = self?.role;
-    const isManagerOrAdmin = "ADMIN" === role || role === "MANAGER";
+    const isAdmin = "ADMIN" === role;
     const [logData, setLogData] = useState([]);
     const [transactionData, seTtransactionData] = useState([]);
 
@@ -116,7 +116,7 @@ function App() {
                         |
                     </NavigationMenuItem>
                     {
-                        isManagerOrAdmin ? <NavigationMenuItem className={`${active === "logs" ? "border-b-[3px]" : ""} p-3 border-black cursor-pointer `} onClick={() => setActive("logs")}>
+                        isAdmin ? <NavigationMenuItem className={`${active === "logs" ? "border-b-[3px]" : ""} p-3 border-black cursor-pointer `} onClick={() => setActive("logs")}>
                             <Link href={"?log"}>
                                 Log
                             </Link>
